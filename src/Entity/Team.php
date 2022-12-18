@@ -23,4 +23,8 @@ class Team extends BaseEntity
     #[ORM\Column(length: 255)]
     protected ?string $name = null;
 
+    public function __toString(): string
+    {
+        return "$this->country - $this->name";
+    }
 }

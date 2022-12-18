@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Play;
+use App\Entity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Play>
+ * @extends ServiceEntityRepository<Battle>
  *
- * @method Play|null find($id, $lockMode = null, $lockVersion = null)
- * @method Play|null findOneBy(array $criteria, array $orderBy = null)
- * @method Play[]    findAll()
- * @method Play[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Battle|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Battle|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Battle[]    findAll()
+ * @method Battle[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PlayRepository extends ServiceEntityRepository
+class BattleRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Play::class);
+        parent::__construct($registry, Entity\Battle::class);
     }
 
-    public function save(Play $entity, bool $flush = false): void
+    public function save(Entity\Battle $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class PlayRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Play $entity, bool $flush = false): void
+    public function remove(Entity\Battle $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class PlayRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Play[] Returns an array of Play objects
+//     * @return Battle[] Returns an array of Battle objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class PlayRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Play
+//    public function findOneBySomeField($value): ?Battle
 //    {
 //        return $this->createQueryBuilder('p')
 //            ->andWhere('p.exampleField = :val')
