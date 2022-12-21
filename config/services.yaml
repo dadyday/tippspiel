@@ -23,3 +23,19 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
+    app.naming_strategy:
+        class: App\NamingStrategy
+
+#naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+#$namingStrategy = new UpperCamelCaseNamingStrategy();
+#$config->setNamingStrategy($namingStrategy);
+
+    #Doctrine\ORM\EntityManager:
+    #    class: App\EntityManager
+    #    stack:
+    #        - App\EntityManager: ~
+    #        - Doctrine\ORM\EntityManager: ~
+
+    #    class: App\Entity\BaseEntity
+    #    factory:  ['App\Entity\BaseEntity', registerEntityManager]
+    #    arguments: ['@Doctrine\ORM\EntityManagerInterface']

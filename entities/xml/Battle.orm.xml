@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="App\Entity\Battle" table="battle">
+    <indexes>
+      <index name="IDX_1399173417414A5" columns="o_day_id"/>
+      <index name="IDX_13991734FE31060F" columns="o_team2_id"/>
+      <index name="IDX_13991734F5FBBF02" columns="o_group_id"/>
+      <index name="IDX_13991734C5714CB6" columns="o_tourney_id"/>
+      <index name="IDX_13991734EC84A9E1" columns="o_team1_id"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="name" type="string" column="name" length="40" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <many-to-one field="oGroup" target-entity="Group" fetch="LAZY">
+      <join-columns>
+        <join-column name="o_group_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="oTourney" target-entity="Tourney" fetch="LAZY">
+      <join-columns>
+        <join-column name="o_tourney_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="oTeam2" target-entity="Team" fetch="LAZY">
+      <join-columns>
+        <join-column name="o_team2_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="oTeam1" target-entity="Team" fetch="LAZY">
+      <join-columns>
+        <join-column name="o_team1_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="oDay" target-entity="Day" fetch="LAZY">
+      <join-columns>
+        <join-column name="o_day_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

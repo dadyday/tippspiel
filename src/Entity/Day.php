@@ -10,68 +10,29 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DayRepository::class)]
 #[ApiResource]
-class Day
+class Day extends BaseEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    protected ?int $id = null;
+
+    #[ORM\Column(length: 10)]
+    protected ?string $short = null;
 
     #[ORM\Column(length: 40)]
-    private ?string $name = null;
+    protected ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'day', targetEntity: Battle::class)]
-    private Collection $Battle;
+    #[ORM\OneToMany(mappedBy: 'oDay', targetEntity: Battle::class)]
+    protected Collection $aBattle;
+
+    #[ORM\ManyToOne(inversedBy: 'aDay')]
+    ##[ORM\JoinColumn(nullable: false)]
+    protected ?Tourney $oTourney = null;
+
 
     public function __construct()
     {
-        $this->Battle = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Battle>
-     */
-    public function getBattles(): Collection
-    {
-        return $this->Battle;
-    }
-
-    public function addBattle(Battle $Battle): self
-    {
-        if (!$this->Battle->contains($Battle)) {
-            $this->Battle->add($Battle);
-            $Battle->setDay($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBattle(Battle $Battle): self
-    {
-        if ($this->Battle->removeElement($Battle)) {
-            // set the owning side to null (unless already changed)
-            if ($Battle->getDay() === $this) {
-                $Battle->setDay(null);
-            }
-        }
-
-        return $this;
+        $this->aBattle = new ArrayCollection();
     }
 }

@@ -6,88 +6,67 @@ use ApiPlatform\Metadata\ApiResource;
 use App\Repository\GroupRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: GroupRepository::class)]
 #[ORM\Table(name: '`group`')]
 #[ApiResource]
-class Group
+class Group extends BaseEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    protected ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'groupings')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Tourney $tourney = null;
+    #[ORM\Column(length: 10, nullable: false)]
+    protected ?string $short = null;
 
-    #[ORM\Column(length: 40)]
-    private ?string $name = null;
+    #[ORM\Column(length: 40, nullable: true)]
+    protected ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'grouped', targetEntity: Battle::class)]
-    private Collection $Battle;
+    #[ORM\ManyToOne(inversedBy: 'aGroup')]
+    ##[ORM\JoinColumn(nullable: false)]
+    protected ?Tourney $oTourney = null;
+
+    # #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
+    # protected array $aTeam = [];
+
+    #[ORM\OneToMany(mappedBy: 'oGroup', targetEntity: Battle::class)]
+    protected Collection $aBattle;
+
+    #[ORM\ManyToMany(targetEntity: Team::class, inversedBy: 'aGroup')]
+    private Collection $aTeam;
+
+    # #[ORM\ManyToMany(targetEntity: Team::class)]
+    # protected Collection $teams;
 
     public function __construct()
     {
-        $this->Battle = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getTourney(): ?Tourney
-    {
-        return $this->tourney;
-    }
-
-    public function setTourney(?Tourney $tourney): self
-    {
-        $this->tourney = $tourney;
-
-        return $this;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
+        $this->aBattle = new ArrayCollection();
+        $this->aTeam = new ArrayCollection();
     }
 
     /**
-     * @return Collection<int, Battle>
+     * @return Collection<int, Team>
      */
-    public function getBattles(): Collection
+    public function getATeam(): Collection
     {
-        return $this->Battle;
+        return $this->aTeam;
     }
 
-    public function addBattle(Battle $Battle): self
+    public function addATeam(Team $aTeam): self
     {
-        if (!$this->Battle->contains($Battle)) {
-            $this->Battle->add($Battle);
-            $Battle->setGrouped($this);
+        if (!$this->aTeam->contains($aTeam)) {
+            $this->aTeam->add($aTeam);
         }
 
         return $this;
     }
 
-    public function removeBattle(Battle $Battle): self
+    public function removeATeam(Team $aTeam): self
     {
-        if ($this->Battle->removeElement($Battle)) {
-            // set the owning side to null (unless already changed)
-            if ($Battle->getGrouped() === $this) {
-                $Battle->setGrouped(null);
-            }
-        }
+        $this->aTeam->removeElement($aTeam);
 
         return $this;
     }

@@ -1,0 +1,87 @@
+Battle:
+    type: entity
+    table: battle
+    indexes:
+        IDX_1399173417414A5:
+            columns:
+                - o_day_id
+        IDX_13991734FE31060F:
+            columns:
+                - o_team2_id
+        IDX_13991734F5FBBF02:
+            columns:
+                - o_group_id
+        IDX_13991734C5714CB6:
+            columns:
+                - o_tourney_id
+        IDX_13991734EC84A9E1:
+            columns:
+                - o_team1_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            nullable: false
+            length: 40
+            options:
+                fixed: false
+    manyToOne:
+        oGroup:
+            targetEntity: Group
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                o_group_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        oTourney:
+            targetEntity: Tourney
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                o_tourney_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        oTeam2:
+            targetEntity: Team
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                o_team2_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        oTeam1:
+            targetEntity: Team
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                o_team1_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        oDay:
+            targetEntity: Day
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                o_day_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

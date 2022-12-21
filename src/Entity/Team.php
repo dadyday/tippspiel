@@ -23,6 +23,14 @@ class Team extends BaseEntity
     #[ORM\Column(length: 255)]
     protected ?string $name = null;
 
+    #[ORM\ManyToMany(targetEntity: Group::class, mappedBy: 'aTeam')]
+    private Collection $aGroup;
+
+    public function __construct()
+    {
+        $this->aGroup = new ArrayCollection();
+    }
+
     public function __toString(): string
     {
         return "$this->country - $this->name";

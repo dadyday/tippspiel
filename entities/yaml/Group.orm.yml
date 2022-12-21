@@ -1,0 +1,35 @@
+Group:
+    type: entity
+    table: group
+    indexes:
+        IDX_6DC044C5C5714CB6:
+            columns:
+                - o_tourney_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            nullable: false
+            length: 40
+            options:
+                fixed: false
+    manyToOne:
+        oTourney:
+            targetEntity: Tourney
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                o_tourney_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }
